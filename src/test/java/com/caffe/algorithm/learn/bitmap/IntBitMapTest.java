@@ -8,8 +8,9 @@ package com.caffe.algorithm.learn.bitmap;
 public class IntBitMapTest {
 
     public static void main(String[] args) {
-        exists();
+//        exists();
         intSort();
+//        repeat();
 
     }
 
@@ -35,6 +36,18 @@ public class IntBitMapTest {
     }
 
     /**
+     * 重复判断
+     */
+    public static void repeat() {
+        int[] intArray = {1, 2, 3, 4, 4, 5, 5, 6, 6};
+        IntBitMap intBitMap = IntBitMap.build(6);
+        for (int item : intArray) {
+            boolean res = intBitMap.repeat(item);
+            System.out.println(item + "是否重复res:" + res);
+        }
+    }
+
+    /**
      * 排序
      */
     public static void intSort() {
@@ -43,6 +56,13 @@ public class IntBitMapTest {
         for (int i = 0; i < res.length; i++) {
             System.out.println(res[i]);
         }
+        System.out.println("-------------------------");
+        int[] intSort = {1, 3, 2, 5, 4, 7, 6, 9, 8};
+        int[] sortRes = IntBitMap.intSort(9, intSort);
+        for (int sortRe : sortRes) {
+            System.out.println(sortRe);
+        }
+
 
     }
 }
