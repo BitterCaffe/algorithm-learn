@@ -51,11 +51,11 @@ public class IntBitMapTest {
      * 排序
      */
     public static void intSort() {
-        int[] ints = {1, 2, 3, 5, 4, 7, 6, 9, 8};
-        int[] res = IntBitMap.intArrSort(9, ints);
-        for (int i = 0; i < res.length; i++) {
-            System.out.println(res[i]);
-        }
+//        int[] ints = {1, 2, 3, 5, 4, 7, 6, 9, 8};
+//        int[] res = IntBitMap.intArrSort(9, ints);
+//        for (int i = 0; i < res.length; i++) {
+//            System.out.println(res[i]);
+//        }
         System.out.println("-------------------------");
         int[] intSort = {1, 3, 2, 5, 4, 7, 6, 9, 8};
         int[] sortRes = IntBitMap.intSort(9, intSort);

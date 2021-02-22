@@ -3,7 +3,8 @@ package com.caffe.algorithm.learn.bitmap;
 /**
  * @author BitterCaffe
  * @date 2020/11/20
- * @description:
+ * @description: bit数组存储的核心是位运算：&所有的都是1则为1 ；|所有的都为0则为0 ；~对所有位置的值进行取反，0变1，1变0
+ * bit数组存储就是按照位移计算结果来存储
  */
 public final class IntBitMap {
     /**
@@ -178,12 +179,13 @@ public final class IntBitMap {
 
         int num = 0;
         int count = 0;
-        //
+        //这层遍历是遍历数据，其实就是最大值个数的校验
         for (int i = 0; i < bitStory.length; i++) {
             int currentStory = bitStory[i];
             //int中每一bit遍历,其实每一位都是存储的具体值，他的值的存储是使用数组index*8、32、64来表示具体值。
             for (int j = 0; j < 32; j++) {
                 //这里使用当前索引位置值和位移后的值做& 计算这样就能计算出当前位移位置的值。如果是0 则说明之前哪个位置没有值存储，所以也就不取数据了。
+                //位移之后做&计算就能判断之前这里是否有值，如果有获取数据，如果没有则0
                 int res = currentStory & (1 << j);
                 if (res != 0) {
                     //num值的计算可以参考上面存入时的方式，因为这里就是按照存储时的方式来取值的。
