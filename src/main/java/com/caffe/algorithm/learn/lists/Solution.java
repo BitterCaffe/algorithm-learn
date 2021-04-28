@@ -690,14 +690,47 @@ public class Solution {
         ListNode ptr = head;
         int last = 0;
         int start = 0;
+        //获取链表大小
         while (ptr != null) {
             list.add(ptr.val);
             ptr = ptr.next;
             last++;
         }
         last--;
+        //从头开始，从尾开始
         while (start < last) {
             //不相等则不是回文数字
+            if (!list.get(start).equals(list.get(last))) {
+                return false;
+            }
+            start++;
+            last--;
+        }
+        return true;
+    }
+
+    /**
+     * 回文数判断
+     *
+     * @param head
+     * @return
+     */
+    static boolean isPalindrome11(ListNode head) {
+        if (null == head) {
+            return false;
+        }
+        List<Integer> list = new ArrayList<>(8);
+        int last = 0;
+        int start = 0;
+        ListNode ptr = head;
+        while (ptr != null) {
+            list.add(ptr.val);
+            ptr = ptr.next;
+            last++;
+        }
+        //数组存储原因
+        last--;
+        while (start <= last) {
             if (!list.get(start).equals(list.get(last))) {
                 return false;
             }
@@ -739,6 +772,57 @@ public class Solution {
         beforeList.next = receiveNode(afterList);
         return true;
 
+    }
+
+    /**
+     * 回文校验
+     *
+     * @return
+     */
+    static boolean isPalindrome12(ListNode head) {
+        if (null == head) {
+            return false;
+        }
+        //中间节点
+        int middle = 0;
+        ListNode count = head;
+        while (count != null) {
+            middle++;
+            count = count.next;
+        }
+        ListNode middlePre = head;
+        middle = middle / 2;
+        for (int i = 0; i < middle - 1; i++) {
+            middlePre = middlePre.next;
+        }
+
+        //反转
+        ListNode pre = null;
+        ListNode cur = middlePre.next;
+        ListNode next = cur.next;
+        ListNode f = null;
+        //链表反转
+        while (cur != null) {
+            cur.next = pre;
+            pre = cur;
+            cur = next;
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        f = pre;
+        ListNode p1 = head;
+        while (f != null) {
+            if (f.val != p1.val) {
+                return false;
+            }
+            f = f.next;
+            p1 = p1.next;
+        }
+
+        //原始链表反转
+        return true;
     }
 
 
@@ -877,8 +961,8 @@ public class Solution {
 //        }
 
         //链表中求相等的节点
-        ListNode res = getIntersectionNode2(l1, l2);
-        System.out.println(null == res ? null : res.val);
+//        ListNode res = getIntersectionNode2(l1, l2);
+//        System.out.println(null == res ? null : res.val);
 
         //删除指定节点
 //        ListNode head = removeElements(l1, 2);
@@ -908,17 +992,15 @@ public class Solution {
 //        }
 
         // 回文数字判断
-//        ListNode a = new ListNode(1);
-//        ListNode b = new ListNode(2);
-//        ListNode c = new ListNode(2);
-//        ListNode d = new ListNode(1);
-//        a.next = b;
-//        b.next = c;
-//        c.next = d;
-//        boolean res = isPalindrome1(a);
-//        System.out.println(res);
-
-
+        ListNode a = new ListNode(1);
+        ListNode b = new ListNode(2);
+        ListNode c = new ListNode(2);
+        ListNode d = new ListNode(2);
+        a.next = b;
+        b.next = c;
+        c.next = d;
+        boolean res = isPalindrome12(a);
+        System.out.println(res);
     }
 
 

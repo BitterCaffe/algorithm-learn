@@ -23,7 +23,6 @@ public class QuickSort {
      * @param r
      */
     private static void quickSortInternal(int[] arr, int p, int r) {
-
         // 递归返回
         if (p >= r) {
             return;
@@ -59,12 +58,13 @@ public class QuickSort {
         int i = p;
         //从最左边遍历检测是否满足划分的要求
         for (int j = p; j <= r - 1; j++) {
-            // 满足基数排序规则，则元素需要向有移动
+            // 满足基数排序规则，则元素需要向右移动，也就是分界线移动
             if (arr[j] < pivot) {
-                //满足基数则
+                //满足基数则，两个数同时移动
                 if (i == j) {
                     i++;
                 } else {
+                    //如果不满足则两个索引位置处的值进行交换并且左边位置右移
                     int temp = arr[i];
                     arr[i] = arr[j];
                     arr[j] = temp;
@@ -72,6 +72,7 @@ public class QuickSort {
                 }
             }
         }
+        //遍历结束代表着某个基数两边的数就分开了
         // 不相同的元素进行交换
         int temp = arr[i];
         arr[i] = arr[r];
@@ -86,10 +87,11 @@ public class QuickSort {
      * @return
      */
     private static int partition1(int[] arr, int left, int right) {
+        //基准对比值
         int middle = arr[right];
         // 最左边的元素，进行对比
         // 这里的curr就是一个分界线，一轮结束后分界线左边和右边的数据分开了……
-        // 在整个过程都是来判断是否要移动curr，
+        // 在整个过程都是来判断是否要移动curr，如果满足大小条件则会进行移动否则不会进行移动
         int curr = left;
         for (int a = left; a < right; a++) {
             //满足条件不用进行交换，只需要元素移动
@@ -113,6 +115,7 @@ public class QuickSort {
         int tmp = arr[curr];
         arr[curr] = arr[right];
         arr[right] = tmp;
+        //返回分界线,在对分界线两边进行查找
         return curr;
     }
 
@@ -123,13 +126,20 @@ public class QuickSort {
      * @return
      */
     private static int partition2(int[] arr, int left, int right) {
+        //如果是第一次，则left=0 right= max
+        //元素排序，从左边开始
         int curr = left;
+        //基数
         int value = arr[right];
+        //如果当前遍历值小于基数则向后移动，如果遍历值大于基数则不移动，
         for (int i = left; i < right; i++) {
             if (arr[i] < value) {
                 if (curr == i) {
                     curr++;
                 } else {
+                    //如果有一个值比基数大则小的值和大的值进行替换
+                    //这样移动后，最后的一个值就是最大的，但是前面的值不一定是有序的，只能说curr作为分界线两边的值是区分开了。这是排序方式但是和二分查找有点相似。
+
                     int tmp = arr[curr];
                     arr[curr] = arr[i];
                     arr[i] = tmp;
@@ -137,7 +147,7 @@ public class QuickSort {
                 }
             }
         }
-
+        //大数向后移动
         int tmp = arr[curr];
         arr[curr] = arr[right];
         arr[right] = tmp;

@@ -1,5 +1,7 @@
 package com.caffe.algorithm.learn.arrays;
 
+import lombok.Data;
+
 /**
  * @author BitterCaffe
  * @date 2020/12/6
@@ -7,6 +9,8 @@ package com.caffe.algorithm.learn.arrays;
  * 2、添加、删除最好的情况下时间复杂度为o(1)
  * 3、添加、删除、最坏时间复杂度为o(n)
  */
+
+@Data
 public class ArrayUtil {
 
     /**
@@ -99,14 +103,4 @@ public class ArrayUtil {
         size--;
     }
 
-    public static void main(String[] args) throws Exception {
-        ArrayUtil arrayUtil = new ArrayUtil();
-        for (int i = 0; i < 10; i++) {
-            arrayUtil.add(i);
-            System.out.println(arrayUtil.size);
-        }
-        System.out.println("size=" + arrayUtil.size);
-        arrayUtil.remove(-1);
-        System.out.println("size=" + arrayUtil.size);
-    }
 }

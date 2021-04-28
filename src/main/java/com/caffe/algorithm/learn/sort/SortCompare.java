@@ -43,6 +43,7 @@ public class SortCompare {
         System.out.println("sort:" + JSON.toJSONString(arr));
     }
 
+
     /**
      * 对冒泡进行优化，如果数组本来就是有序的则不再进行排序
      *
@@ -116,33 +117,85 @@ public class SortCompare {
         for (int i = 1; i < arr.length; i++) {
             //待插入值
             int value = arr[i];
-            //有序位置
+            //有序位置,也就是前面排序后的值
             int j = i - 1;
             for (; j >= 0; j--) {
                 //待插入元素和有序元素进行对比
                 if (arr[j] > value) {
                     //如果有序元素位置大于要插入的值则后移一位，被覆盖的值就保存在了value中所以，这里的循环都是对大于value值的后移并找到合适的位置
+                    //这里为何可以直接覆盖那，因为j+1的值已经在上面记录了即value所以可以直接覆盖
                     arr[j + 1] = arr[j];
                 } else {
                     //这里为何break，因为arr[j]以及之前的都是有序的，只要第一个小于value 则前面的都小于这个值所以不用判断了
                     break;
                 }
             }
-            //找到合适位置
+            //找到合适位置，将带插入的值插入。
             arr[j + 1] = value;
         }
         System.out.println("insertSort1:" + JSON.toJSONString(arr));
 
     }
 
+    //两种排序比较：冒泡排序要做的就是就是一个个老老实实的遍历，碰到不满足的就后移。这种方式要遍历所有元素。为了优化这种方式后边出现了优化后的冒泡排序，这种方式只需要判断遍历的元素是否有序，如果有序则直接退出不用遍历所有元素！
+    //插入排序是一个新思路：默认数组中第一个元素是有序而后面的元素都是无序的，后面的元素通过遍历一个个来尝试插入有序位置，但是没遍历一个元素，有序元素的位置也在发生者改变。
 
+
+    /**
+     * @param arr
+     */
+    static void insertSort2(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            //带插入值
+            int value = arr[i];
+            //有序位置,有序位置为何是插入值的前一位，因为待插入的度列是有序的。
+
+            int j = i - 1;
+            for (; j >= 0; j--) {
+                if (arr[j] > value) {
+                    //后移一位，继续比较
+                    arr[j + 1] = arr[j];
+                } else {
+                    break;
+                }
+            }
+            //这里为何是j+1因为上面的循环都会-1
+            arr[j + 1] = value;
+        }
+
+        System.out.println("insertSort2" + JSON.toJSONString(arr));
+    }
+
+    static void insertSort3(int[] arr) {
+        for (int i = 1; i < arr.length; i++) {
+            int value = arr[i];
+            int j = i - 1;
+            for (; j >= 0; j--) {
+                if (arr[j] > value) {
+                    arr[j + 1] = arr[j];
+                } else {
+                    break;
+                }
+            }
+            arr[j + 1] = value;
+        }
+        System.out.println("insertSort3=" + JSON.toJSONString(arr));
+
+    }
+
+
+    /**
+     * 普通方式、优化方式、插入方式三种思路
+     *
+     * @param args
+     */
     public static void main(String[] args) {
         SortCompare sortCompare = new SortCompare();
         int[] arr = {1, 2, 3, 4, 6, 5};
-        sort(arr);
-        optimizeSort(arr);
-        optimizeSort21(arr);
-        insertSort(arr);
+//        optimizeSort(arr);
+//        optimizeSort21(arr);
+//        insertSort(arr);
+        insertSort3(arr);
     }
 
 }

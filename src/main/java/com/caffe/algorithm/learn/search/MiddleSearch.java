@@ -13,99 +13,63 @@ public class MiddleSearch {
      * 现在这种写法有个问题如果len的值大于arr.length 则会出现问题
      *
      * @param arr
-     * @param len
-     * @param value
+     * @param target
      * @return
      */
-    public static int search(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-
-        while (low <= high) {
-            int middle = (low + high) / 2;
-            if (arr[middle] == value) {
-                return middle;
-            } else if (arr[middle] < value) {
-                low = middle + 1;
-            } else if (arr[middle] > value) {
-                high = middle - 1;
+    public static int search(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (arr[mid] > target) {
+                right = mid - 1;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else if (arr[mid] == target) {
+                return target;
             }
         }
         return -1;
     }
 
-    /**
-     * search 解决low+high 的溢出问题，这个溢出其实不影响整个流程的
-     * search 这里说的解决溢出是使用low+(high-low)/2 ；这里防止的溢出是指 （low+high）/2 的值大于high的值
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int search2(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-        while (low <= high) {
-            int middle = low + (high - low) / 2;
-            if (arr[middle] == value) {
-                return middle;
-            } else if (arr[middle] < value) {
-                low = middle + 1;
-            } else if (arr[middle] > value) {
-                high = middle - 1;
+
+    static int search1(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (arr[mid] > target) {
+                right = mid - 1;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else if (arr[mid] == target) {
+                right = mid - 1;
             }
         }
-        return -1;
+
+        if (left > arr.length || arr[left] != target) {
+            return -1;
+        }
+        return left;
     }
 
-    /**
-     * rewrite
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int search22(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] == value) {
-                return middle;
-            } else if (arr[middle] > value) {
-                high = middle - 1;
-            } else {
-                low = middle + 1;
+    static int search3(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (arr[mid] > target) {
+                right = mid - 1;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else if (arr[mid] == target) {
+                left = mid + 1;
             }
         }
-        return -1;
+
+        if (right < 0 || arr[right] != target) {
+            return -1;
+        }
+        return right;
     }
 
-    /**
-     * 使用位移计算
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int search3(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] == value) {
-                return middle;
-            } else if (arr[middle] < value) {
-                low = middle + 1;
-            } else if (arr[middle] > value) {
-                high = middle - 1;
-            }
-        }
-        return -1;
-    }
 
     public static int search4(int[] arr, int len, int value) {
         int low = 0;
@@ -149,6 +113,7 @@ public class MiddleSearch {
             } else if (arr[middle] < value) {
                 low = middle + 1;
             } else {
+                //判断前一个值是否相等
                 if (middle == 0 || arr[middle - 1] != value) {
                     return middle;
                 } else {
@@ -190,65 +155,6 @@ public class MiddleSearch {
         return -1;
     }
 
-
-    /**
-     * 获取给定值在数组中第一个相等的索引位
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int firstValue3(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] > value) {
-                high = middle - 1;
-            } else if (arr[middle] < value) {
-                low = middle + 1;
-            } else {
-                if (middle == 0 || arr[middle - 1] != value) {
-                    return middle;
-                } else {
-                    high = middle - 1;
-                }
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * 查找最后一个等于的值
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int lastValue(int[] arr, int len, int value) {
-
-        int low = 0;
-        int high = len - 1;
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] > value) {
-                high = middle - 1;
-            } else if (arr[middle] < value) {
-                low = middle + 1;
-            } else {
-                if (middle == (len - 1) || arr[middle + 1] != value) {
-                    return middle;
-                } else {
-                    low = middle + 1;
-                }
-            }
-        }
-        return -1;
-    }
-
     /**
      * 查找给定元素在数组中的最后一个相等的索引位置
      * 1、查找相等元素
@@ -281,34 +187,9 @@ public class MiddleSearch {
         return -1;
     }
 
-    /**
-     * 查找第一个大于或等于给定值的元素
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int firstEqualValue(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] >= value) {
-                if (middle == 0 || arr[middle - 1] < value) {
-                    return middle;
-                } else {
-                    high = middle - 1;
-                }
-            } else {
-                low = middle + 1;
-            }
-        }
-        return -1;
-    }
 
     /**
-     * 超找数组中第一个大于等于给定值的元素
+     * 查找数组中第一个大于等于给定值的元素
      * 查找第一个大于等于的值，这里注意两点，第一第一个，第二大于等于所以对算法进行拆分
      * 1、先查找大于等于的元素
      * 2、确认是不是第一个，怎么确定是第一个那？
@@ -320,52 +201,24 @@ public class MiddleSearch {
      * 2、判断是否是第一个元素满足条件的元素
      *
      * @param arr
-     * @param len
-     * @param value
+     * @param target
      * @return
      */
-    public static int firstEqualValue2(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len - 1;
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] >= value) {
-                if (middle == 0 || arr[middle - 1] < value) {
-                    return middle;
+    public static int firstEqualValue(int[] arr, int target) {
+        int left = 0, right = arr.length - 1;
+        while (left <= right) {
+            int mid = left + ((right - left) >> 1);
+            if (arr[mid] >= target) {
+                if (mid == 0 || arr[mid - 1] < target) {
+                    return mid;
                 } else {
-                    high = middle - 1;
+                    right= mid-1;
                 }
-            } else {
-                low = middle + 1;
+            }else{
+                left = mid+1;
             }
         }
-        return -1;
-    }
-
-    /**
-     * 获取最后一个小于或等于给定值的元素
-     *
-     * @param arr
-     * @param len
-     * @param value
-     * @return
-     */
-    public static int lastEqualValue(int[] arr, int len, int value) {
-        int low = 0;
-        int high = len;
-        while (low <= high) {
-            int middle = low + ((high - low) >> 1);
-            if (arr[middle] <= value) {
-                if (middle == len - 1 || arr[middle + 1] > value) {
-                    return middle;
-                } else {
-                    low = middle + 1;
-                }
-            } else {
-                high = middle - 1;
-            }
-        }
-        return -1;
+        return  -1;
     }
 
 
@@ -383,12 +236,13 @@ public class MiddleSearch {
      * @param value
      * @return
      */
-    public static int lastEqualValue2(int[] arr, int len, int value) {
+    public static int lastEqualValue(int[] arr, int len, int value) {
         int low = 0;
         int high = len - 1;
         while (low <= high) {
             int middle = low + ((high - low) >> 1);
             if (arr[middle] <= value) {
+                //如果满足小于等于条件则判断是否是最后一个元素
                 if (middle == len - 1 || arr[middle + 1] > value) {
                     return middle;
                 } else {
@@ -429,24 +283,22 @@ public class MiddleSearch {
 
 
         // second
-
-        int[] arr = {1, 2, 3, 3, 3, 5, 6, 7, 8};
-        int len = arr.length;
-        int value = 4;
-        int index = search22(arr, len, value);
+        int[] arr = {1, 2, 2, 2, 3};
+        int value = 2;
+        int index = firstEqualValue(arr, value);
         System.out.println("查找相等的元素：" + index);
-
-        int firstValue2 = firstValue2(arr, len, value);
-        System.out.println("查找相等的第一个元素：" + firstValue2);
-
-        int lastValue2 = lastValue2(arr, len, value);
-        System.out.println("查找相等的最后一个元素：" + lastValue2);
-
-        int firstEqualValue2 = firstEqualValue2(arr, len, value);
-        System.out.println("查找第一个大于等于的元素：" + firstEqualValue2);
-
-        int lastEqualValue2 = lastEqualValue2(arr, len, value);
-        System.out.println("查找最后一个小于等于的元素：" + lastEqualValue2);
+//
+//        int firstValue2 = firstValue2(arr, len, value);
+//        System.out.println("查找相等的第一个元素：" + firstValue2);
+//
+//        int lastValue2 = lastValue2(arr, len, value);
+//        System.out.println("查找相等的最后一个元素：" + lastValue2);
+//
+//        int firstEqualValue2 = firstEqualValue2(arr, len, value);
+//        System.out.println("查找第一个大于等于的元素：" + firstEqualValue2);
+//
+//        int lastEqualValue2 = lastEqualValue2(arr, len, value);
+//        System.out.println("查找最后一个小于等于的元素：" + lastEqualValue2);
 
 
     }

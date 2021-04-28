@@ -3,7 +3,7 @@ package com.caffe.algorithm.learn.bitmap;
 /**
  * @author BitterCaffe
  * @date 2020/11/20
- * @description: bit数组存储的核心是位运算：&所有的都是1则为1 ；|所有的都为0则为0 ；~对所有位置的值进行取反，0变1，1变0
+ * @description: bit数组存储的核心是位运算：&都是1则为1 ；|都为0则为0 ；~对所有位置的值进行取反，0变1，1变0；&、|、~都是位运算，会将十进制转换为二进制进行位运算！
  * bit数组存储就是按照位移计算结果来存储
  */
 public final class IntBitMap {

@@ -10,33 +10,17 @@ public class SinglyList {
     private int size;
 
     /**
-     * 单链表末尾添加
+     * 单链表尾节点添加
      *
      * @param node
      */
     public void add(Node node) {
-        size++;
         //如果头节点为空则新节点做头节点
         if (head == null) {
             head = node;
-            return;
-        }
-        //添加节点到尾部，这种添加的时间复杂度为o(n),空间复杂度为o(1)
-        Node cur = head;
-        while (cur.next != null) {
-            cur = cur.next;
-        }
-        cur.next = node;
-    }
 
-    public void addv1(Node node) {
-        if (null == node) {
-            return;
-        }
-
-        if (null == head) {
-            head = node;
         } else {
+            //添加节点到尾部，这种添加的时间复杂度为o(n),空间复杂度为o(1)
             Node cur = head;
             while (cur.next != null) {
                 cur = cur.next;
@@ -246,7 +230,6 @@ public class SinglyList {
     public static void main(String[] args) {
         SinglyList singlyList = new SinglyList();
         Node node = new Node(4);
-        singlyList.addv1(new Node(1));
         singlyList.add(new Node(2));
         singlyList.add(node);
         singlyList.add(new Node(5));
