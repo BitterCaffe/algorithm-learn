@@ -18,7 +18,13 @@ public class AlternateNumLockPrint {
      * 循环次数
      */
     private volatile int count;
+    /**
+     * 基于AQS的锁，AQS底层是基于LockSupport#park#unpark
+     */
     Lock lock = new ReentrantLock();
+    /**
+     * 条件队列
+     */
     Condition condition = lock.newCondition();
 
     public AlternateNumLockPrint(int times) {
@@ -26,16 +32,17 @@ public class AlternateNumLockPrint {
     }
 
     /**
-     * 信息打印
+     * 信息交互打印（奇数偶数）、也是线程间的通信
      */
     private void print() {
         lock.lock();
         try {
             while (count < times) {
                 System.out.println(String.format("线程%s打印%d", Thread.currentThread().getName(), ++count));
-                condition.signalAll();
+                condition.signal();
                 condition.await();
             }
+            condition.signalAll();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

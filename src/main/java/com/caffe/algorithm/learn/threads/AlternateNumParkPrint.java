@@ -8,9 +8,17 @@ import java.util.concurrent.locks.LockSupport;
  * @description: 数字交替打印
  */
 public class AlternateNumParkPrint {
-
+    /**
+     * 交替打印线程
+     */
     static Thread thread1, thread2;
+    /**
+     * 总循环数
+     */
     static int times = 10;
+    /**
+     * 起始值
+     */
     static int count = 1;
 
 
