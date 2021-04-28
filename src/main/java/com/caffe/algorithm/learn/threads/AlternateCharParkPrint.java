@@ -1,6 +1,5 @@
 package com.caffe.algorithm.learn.threads;
 
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.LockSupport;
 
 /**
